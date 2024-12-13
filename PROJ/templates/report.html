@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly Detection Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        td {
+            background-color: #f4f4f4;
+        }
+        a {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Anomaly Detection Report</h1>
+    <p><strong>Total Anomalies:</strong> {{ report.summary.total_anomalies }}</p>
+    <p><strong>Event Log Anomalies:</strong> {{ report.summary.event_log_anomalies }}</p>
+    <p><strong>Registry Anomalies:</strong> {{ report.summary.registry_anomalies }}</p>
+
+    <h2>Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Type</th>
+                <th>Attack Type</th>
+                <th>Details</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for anomaly in report.details %}
+            <tr>
+                <td>{{ anomaly.timestamp }}</td>
+                <td>{{ anomaly.type }}</td>
+                <td>{{ anomaly.attack_type }}</td>
+                <td>{{ anomaly.details }}</td>
+                <td>
+                    {% if anomaly.link %}
+                    <a href="{{ anomaly.link }}" target="_blank">Click to open</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
